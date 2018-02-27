@@ -1,8 +1,6 @@
 # Wonder
-=============================
 
 ## TODO
-------------------------------
 
 * make chat options to save or not save room's messages;
 * home animation;
