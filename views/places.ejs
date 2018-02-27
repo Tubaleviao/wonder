@@ -1,0 +1,13 @@
+<% include header.ejs %>
+
+  <div id="places">
+    <input id="lat" type="text" placeholder="Latitude..." />
+    <input id="long" type="text" placeholder="Longitude..."  />
+    <input id="sub" type="submit" value="Search"/><br/><br/>
+  </div>
+  <div id="map"></div>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbQ-7BbAbLiflstZnT9YtZegSOzR1A_RI&libraries=places"></script>
+  <script>initMap(-22.785456, -47.300335)</script>
+
+
+<% include footer.ejs %>

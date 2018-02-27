@@ -1,0 +1,15 @@
+# files to be excluded:
+
+cert/*
+!.none  
+php/*
+public/img/*
+!.none
+public/moodlemobile2/
+public/tmp/*
+!.none
+public/users/*
+!.none
+*.log
+node_modules/
+app.env

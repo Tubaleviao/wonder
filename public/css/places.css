@@ -1,0 +1,14 @@
+#map {
+  height: 80%;
+  width: 50%;
+  float: right;
+  margin-top: 25px;
+  display: inline-block;
+}
+#places{
+  width: 50%;
+  text-align: center;
+  margin-top: 25px;
+  display: inline-block;
+  word-wrap: break-word;
+}

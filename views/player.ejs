@@ -1,0 +1,41 @@
+<% include header.ejs %>
+
+		<div class="body"><br />
+			<p id="np">Web audio player</p>
+			
+			<div class="bt play" id="play"></div>
+			<div class="bt" id="next"></div>
+			<div id="progress"><div id="progress-buffer"><div id="progress-value"><div class="seeker"></div></div></div></div>
+			<div class="bt" id="vol"></div>
+			<div id="vol-bar"><div id="vol-level"><div><div class="seeker"></div></div></div></div>
+			<audio id="audio" autoplay></audio> <br/>
+			
+			<div class="checkbox random checked"></div>
+			<div class="checkbox repeat"></div>
+			<br/><br/>
+			<div id="upload-progress"></div>
+			<div id="selected"></div>
+			<input type="text" class="search" placeholder="Search..."></input>
+			<div class="label">
+				<input type="file" id="siofu_input" accept="audio/mp3" onchange="selected()" multiple/>
+				Upload Files
+			</div><br/>
+			
+			<ul class="musics"></ul>
+		</div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/siofu/client.js"></script>
+	<script src="js/drags.js"></script>
+	<script>
+		var musicsJs = <%-JSON.stringify(musics)%>;
+		addMusics(musicsJs);
+		function getSize(){
+			return <%-size%>;
+		}
+		function getUser(){
+			return "<%=user%>";
+		}
+	</script>
+
+<% include footer.ejs %>

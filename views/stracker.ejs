@@ -1,0 +1,52 @@
+<% include header.ejs %>
+
+<p class="msg"></p>
+
+<div class="ballon">Choose a start date</div>
+
+<div class="menu">
+	<br/>
+	<input type="submit" value="Register Sleep" id="start" />
+	<br/><br/><div id="startd"></div>
+	<br/><div id="endd"></div><br/>
+	
+	<div class="update">
+		Start Date:
+		<div class="startdate">
+			<input type="hidden" id="id" />
+			Dia: <input id="sdate" type="date" /><br/>
+			Hora: <input id="stime" type="time" />
+		</div><br/>
+		End Date:
+		<div class="enddate">
+			Dia: <input id="edate" type="date" /><br/>
+			Hora: <input id="etime" type="time" />
+		</div><br/>
+		<input id="save" type="submit" value="Save"/>
+		<input id="del" type="submit" value="Delete"/>
+	</div>
+</div>
+
+
+
+
+<% if(locals.records){ %>
+	<script>
+		function getRecords(){
+			return <%-JSON.stringify(records) %>;
+		}
+	</script>
+<% } %>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var d = new Date();
+	montaTabela(d.getMonth(), d.getFullYear());
+</script>
+<script>
+	function getUser(){
+		var user = <%-JSON.stringify(user)%>;
+		return(user);
+	}
+</script>
+
+<% include footer.ejs %>

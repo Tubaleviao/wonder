@@ -1,0 +1,12 @@
+text{
+  fill: #00ff00;
+}
+.c3-tooltip-container{
+  background-color: rgba(0, 0, 0, 0.7);
+}
+#wid{
+  width: 250px;
+}
+#wpass{
+  width: 120px;
+}

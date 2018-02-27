@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Pr0x1</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <style>
+      #line label{
+        background-color: black;
+        color: lime;
+        font-size: 15;
+        font-family: "Courier New";	/* Yeah */
+      }
+      #line{
+        margin: 0px;
+        height: 20px;
+      }
+      #bode{
+        text-align: center;
+        display: inline-block;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        background-color: black;
+        margin-bottom: 0px;
+      }
+      input[name="ufmff"]{
+        margin-right: 10px;
+        width: 700;
+        background-color: black;
+        border:1px solid #00BB00;
+        color:lime;
+      }
+      .button{
+        margin-right: 10px;
+        background-color: black;
+        border:1px solid #00BB00;
+        color:lime;
+      }
+    </style>
+    <script>
+      $(function(){
+        var f = $("<form>"), s, i, h1, h2, h3; //my-fucking-really-fucking-form
+        f.attr('action', 'https://tuba.work/pr0x1');
+        ///f.attr('onsubmit', 'return updateLocation(this);');
+        f.attr('target', '_top').attr("id", "bode");
+        f.attr('method', 'post');
+        s = '<input type="submit" value="Go" id="mfbfmff" class="button"/>';
+        h1 = '<input type="hidden" value="<%=domain%>" name="dfmff" id="dfmff"/>';
+        h2 = '<input type="hidden" value="<%=path%>" name="pfmff" id="pfmff"/>';
+        h3 = '<input type="hidden" id="mfmff" name="mfmff"/>';
+        i = "<input type='text' value='<%=domain+path%>' name='ufmff' id='ufmff'/>"; 
+        //url-from-my-fucking-form //dfmff //pfmff
+        f.append("<p id='line'><label>URL: </label>"+h1+h2+h3+i+s+"</p>");
+        $("body").prepend(f);
+        
+        $("#tfsfpah").on('submit', 'form', function(event){
+          //the fucking site for proxying and hack
+          event.preventDefault();
+          var new_path;
+          var meth = $(this).attr("method");
+          if(meth=="GET"){
+            new_path = $(this).attr("action") + "?"+ $(this).serialize();
+          }else{
+            new_path = $(this).attr("action");
+          }
+          $("#mfmff").val(meth);
+          $("#pfmff").val(new_path);
+          $("#bode").submit();
+        });
+        
+        $("a").on('click', function(event){
+          event.preventDefault();
+          var first = $(this).attr('href');
+          $("#mfmff").val("GET");
+          if(first.substr(0, 1)=="/"){
+            $("#pfmff").val(first);
+            $("#bode").submit();
+          }else{
+            var i, seph=0;
+            for(i=0; i<3; i++){
+              seph = first.indexOf("/", seph+1);
+            }
+            $("#dfmff").val(first.substr(0, seph));
+            $("#pfmff").val(first.substr(seph, first.length));
+            $("#bode").submit();
+          }
+        });
+        
+        $("#mfbfmff").on('click', function(event){
+          // my fucking button from my fucking form
+          event.preventDefault();
+          $("#mfmff").val("GET");
+          var first = $("#ufmff").val();
+          var i, seph=0;
+          //alert(first);
+          for(i=0; i<3; i++){
+            var x = first.indexOf("/", seph+1);
+            if(x>0){
+              seph = x;
+            }
+          }
+          
+          $("#dfmff").val(first.substr(0, seph));
+          $("#pfmff").val(first.substr(seph, first.length));
+          $("#bode").submit();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    
+    <div id="tfsfpah"><%-body%></div><br><br> <!-- the fucking site for proxying and hack -->
+    
+  </body>
+</html>

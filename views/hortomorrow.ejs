@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<link rel="shortcut icon" href="img/icon.ico"/>
+		<link rel="stylesheet" href="css/base.css"/>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <title>Hortomorrow</title>
+	</head>
+	<body>
+
+<p>
+  <div style="font-size:150px;" id="dd">00</div>
+  <div style="font-size:130px;margin-top:10px;" id="hh">00</div>
+  <div style="font-size:100px;margin-top:20px;" id="mm">00</div>
+  <div style="font-size:70px;margin-top:30px;" id="ss">00</div>
+  <div style="font-size:50px;margin-top:40px;" id="ml">00</div>
+  <div style="font-size:150px;margin-top:500px;">PAGA NOIS</div>
+</p>
+  
+<script>
+  var agora = new Date(), htw = new Date(2017, 12, 27, 22);
+  var diff = htw - agora;
+  $("#dd").text(Math.round(diff/1000/60/60/24)+" Dias");
+  $("#hh").text(Math.round(diff/1000/60/60)+" Horas");
+  $("#mm").text(Math.round(diff/1000/60)+" Minutos");
+  $("#ss").text(Math.round(diff/1000)+" Segundos");
+  $("#ml").text(Math.round(diff)+" Milésimos");
+  
+  setInterval(function(){
+    var agora = new Date(), htw = new Date(2017, 12, 27, 22);
+    var diff = htw - agora;
+    $("#dd").text(Math.round(diff/1000/60/60/24)+" Dias");
+    $("#hh").text(Math.round(diff/1000/60/60)+" Horas");
+    $("#mm").text(Math.round(diff/1000/60)+" Minutos");
+    $("#ss").text(Math.round(diff/1000)+" Segundos");
+    $("#ml").text(Math.round(diff)+" Milésimos");
+  }, 10);
+</script>
+
+<% include footer.ejs %>

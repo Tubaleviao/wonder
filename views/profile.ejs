@@ -1,0 +1,35 @@
+<% include header.ejs %>
+
+<p>Know yourself before knowing others</p>
+<div class="info">
+	<table>
+		<% if(locals.userinfo) { %>
+		<tr><td colspan=2 class='title'>Profile Information</td></tr>
+		<tr><td>Username   </td><td><%=userinfo.username%></td></tr>
+		<tr><td>ID   </td><td><%=userinfo._id%></td></tr>
+		<tr><td>Encrypted-Password   </td><td><%=userinfo.password%></td></tr>
+		<tr><td>Email   </td><td><%=userinfo.email%></td></tr>
+		<tr><td>Created Date   </td><td><%=userinfo.date%></td></tr>
+		<tr><td>Visited Pages Count   </td><td><% for(var key in userinfo.visitedPages){ %>
+																							<%=key+' : '+userinfo.visitedPages[key] %> <br>
+																								<%} %></td></tr>
+		<% } %>
+	</table>
+	<div class="accounts">
+		<% include profile_buttons.ejs %>
+	</div>
+	
+	<div class="messages">
+		<textarea placeholder="Message..."></textarea>
+	</div>
+</div>
+
+<script>
+	function getUser(){var user = <%-JSON.stringify(user)%>;return(user);	}
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="963548942137-dg8eh2dfgmj6o3e5lisfob5n6pspmoio.apps.googleusercontent.com">
+
+<% include footer.ejs %>
+

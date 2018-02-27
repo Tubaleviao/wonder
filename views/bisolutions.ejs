@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Bi Solutions</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="js/bisolutions.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+    <p id="msg" style="display: none;"></p>
+    <input type="hidden" id="_id"/>
+    Fazer a requisição no link <input type="text" id="url" size="50" /> 
+    todos os dias às <input type="time" id="hora" value="00:00" /> 
+    <button>Inserir</button><br>
+    
+    <div id="links" style="float: left;">
+      <h1>Registered Links</h1>
+      <ul>
+        <% if(locals.links) { %>
+          <script>
+          <% links.forEach(function(link){ %>
+            printLink( '<%-JSON.stringify(link)%>' );
+          <% }); %>
+          </script>
+        <% } %>
+      </ul>
+    </div>
+    
+    <div id="scheds" style="float: left;">
+      <h1>Started Jobs</h1>
+      <ul>
+        Loading...
+      </ul>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+  </body>
+</html>

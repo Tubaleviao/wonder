@@ -1,0 +1,16 @@
+<% include header.ejs %>
+
+
+<div style="text-align: center;">
+<p>	A verification url has been sent to your email address.</p>
+<p> Please, follow that link to get verified and be able to use our apps.</p>
+  <form action="auth">
+    <input style="width:150px;" type="email" name="email" value="<%=email%>" />
+    <input type="submit" value="Send again"/>
+  </form>
+  
+  <script>
+    $('.msg').show(200).delay(500).fadeOut(150);
+  </script>
+</div>
+<% include footer.ejs %>

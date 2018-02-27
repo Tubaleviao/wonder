@@ -1,0 +1,57 @@
+body {
+	font-family: "Courier New";	/* Yeah */
+	background-color: black; 
+	color: lime;
+	margin: 10px;
+	text-align: center;
+}
+ul{
+	list-style-type: none;
+}
+footer {
+	right: 0;
+	bottom: 0;
+	position: fixed;
+}
+a{
+	margin: 5px;
+}
+a:link {
+	color: #00ff00;
+	text-decoration:none;
+}
+a:visited {
+	color: #00ff00;
+	text-decoration:none;
+}
+a:hover {
+	background-color:lime;
+	color:black;
+}
+input{
+	background-color: black;
+	border:1px solid #00BB00;
+	color:lime;
+	width:100px;
+}
+form{
+	display: inline;
+}
+/*img{
+	width:20%;
+	height: auto;
+	margin: 10px;
+}*/
+.bt{
+	width:50px;
+}
+.nav-head{
+	float: left;
+}
+.nav-body{
+	text-align: right;
+	height: 19px;
+}
+#signup{
+	display:none;
+}

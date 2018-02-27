@@ -1,0 +1,42 @@
+<html>
+	<head>
+	<% if(locals.room){ %>
+		<link rel="stylesheet" href="../css/base.css"/>
+		<script src="../js/jquery.js"></script>
+		<link rel="shortcut icon" href="../img/icon.ico"/>
+		<script src="../js/chat.js"></script>
+		<link rel="stylesheet" href="../css/chat.css"/>
+		<title class="title"><%=room%></title>
+	<% } %>
+	
+
+	
+</head>
+<body>
+	<div class='body'>
+		
+		<script src="/socket.io/socket.io.js"></script>
+	</div>
+
+<script>
+	
+	
+	function getUser(){
+		var user;
+		<% if(locals.user){ %>
+			user = <%-JSON.stringify(user)%>;
+		<% } %>
+			
+		return(user);
+	}
+	
+	function getRoom(){
+		<% if(locals.room){ %>
+			return('<%=room%>');
+		<% } %>
+			return(false);
+		<% } %>
+	}
+</script>
+
+<% include footer.ejs %>
