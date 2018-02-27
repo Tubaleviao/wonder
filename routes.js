@@ -9,7 +9,6 @@ php = require('exec-php'),
 otherEmail = false,
 request = require('request'),
 url = require('url'),
-Converter = require("csvtojson").Converter,
 exchange = require('blockchain.info/exchange'),
 cur = exchange.getTicker();
 
