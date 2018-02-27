@@ -59,11 +59,11 @@ $(function(){
 
 	function beingHit(bullet){
 		if($('img').length){
-			var aaah = new Audio('aaah.mp3');
+			var aaah = new Audio('mp3/aaah.mp3');
 			aaah.play();
 			$('img').first().remove();
 		}else{
-			var death = new Audio('pac_death.mp3');
+			var death = new Audio('mp3/pac_death.mp3');
 			death.play();
 			$('#'+me).remove();
 			$('.logout').show();
@@ -100,8 +100,8 @@ $(function(){
 		var b_end = getShootPoint(me, p.left, p.top, 500);
 		var id = me+shooted;
 		var time = 300;
-		//var lazer = new Audio('lazer.mp3'); // LAZER SHOOT AUDIO USES TOO MUCH INTERNET
-		//lazer.play();
+		var lazer = new Audio('mp3/lazer.mp3'); // LAZER SHOOT AUDIO USES TOO MUCH INTERNET
+		lazer.play();
 
 		myshoot(id, b_start, b_end, time);
 
@@ -116,7 +116,7 @@ $(function(){
 
 	// Login and startup code
 
-	/* var impossible = new Audio('impossible.mp3'); // MUSIC USE TOO MUCH INTERNET
+	/* var impossible = new Audio('mp3/impossible.mp3'); // MUSIC USE TOO MUCH INTERNET
 	impossible.addEventListener('ended', function() {
 	    this.currentTime = 0;
 	    this.play();
