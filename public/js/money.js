@@ -371,7 +371,7 @@ $(function(){
 			}
 		}
 		//$("form:first").trigger('reset');
-		$("#oneMonth li").last().css("background-color", "yellow");
+		//$("#oneMonth li").last().css("background-color", "yellow");
 		$("form:first")[0].reset();
 	});
 	

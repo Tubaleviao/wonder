@@ -1,6 +1,6 @@
 $(function(){
   
-  var socket = io.connect('http://tuba.life/notes');
+  var socket = io.connect('http://tuba.work/notes');
   var x, y;
   /*$('#save').on('click', function(){
     socket.emit('save', {user: getUser(), note: $('#note1').val() });
@@ -10,7 +10,8 @@ $(function(){
 		var ta = $('<textarea/>').addClass('note');
 		var id0 = $('.note').last().attr('id');
 		if(id0){
-			var id = Number(id0.substring(4, id0.length));
+			var id = Number(id0.substring(4, id0.length)); // don't take the last note, neither the total number (get the higher)
+			console.log(id);
 			ta.attr('id', 'note'+(id+1));
 			$('.note').last().after(ta);
 		}else{
