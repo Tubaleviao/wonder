@@ -373,6 +373,11 @@ $(function(){
 		//$("form:first").trigger('reset');
 		//$("#oneMonth li").last().css("background-color", "yellow");
 		$("form:first")[0].reset();
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		$('select[name="month"]').val(month);
+		$('input[name="year"]').val(Number(year));
 	});
 	
 	socket.on('moveDeleted', function(data){

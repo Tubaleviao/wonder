@@ -110,7 +110,7 @@ function gSignOut() {
 
 $(function(){
   
-  var socket = io.connect('http://tuba.life/profile');
+  var socket = io.connect('http://tuba.work/profile');
     
   socket.on('userInfo', function(info){
     console.log(info);
