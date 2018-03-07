@@ -145,10 +145,15 @@ $(document).ready(function(){
 	$('.trash').mouseout(function(){
 		$(this).closest('li').children('.music').css('text-decoration', 'none');
 	});
+	
+	jQuery.expr[':'].contains = function(a, i, m) { // sets contains to lowercase
+		return jQuery(a).text().toLowerCase()
+				.indexOf(m[3].toLowerCase()) >= 0;
+	};
 
 	$('.search').on('input', function(){
-		$("li:not(:contains('"+$(this).val()+"'))").hide(); //val().toLowerCase()
-		$("li:contains('"+$(this).val()+"')").show();
+		$("li:not(:contains('"+$(this).val().toLowerCase()+"'))").hide(); //val().toLowerCase()
+		$("li:contains('"+$(this).val().toLowerCase()+"')").show();
 	});
 	
 	$("#vol").on('click', function(){
