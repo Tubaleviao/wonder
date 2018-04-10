@@ -49,6 +49,12 @@ exports.broker = function(socket){
 		});
 	});
 	
+	socket.on('delete', function(data){
+		mongo.deleteField(data, function(_id){
+			socket.emit('deleted', _id);
+		});
+	});
+	
 	socket.on('loadFields', function(data){
 		mongo.loadFields(data, function(fields){
 			socket.emit('fieldsReady', fields);

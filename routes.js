@@ -1,5 +1,5 @@
 var moment = require('moment'),
-nav = ['chat', 'notes', 'player', 'shooter', 'money', 'stracker', 'bitcoin', 'about','help'],//'Shooter', 'Places',  'Pr0x1'
+nav = ['chat', 'notes', 'player', 'broker', 'shooter', 'money', 'stracker', 'bitcoin', 'about', 'help'],//'Shooter', 'Places',  'Pr0x1'
 mongo = require('./mongo'),
 fs = require('fs'),
 nodemailer = require('nodemailer'),

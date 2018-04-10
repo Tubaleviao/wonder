@@ -11,38 +11,6 @@ function initMap() {
     zoom: 18
   });
   
-  // POLYGONS
-  
-  var triangleCoords = [
-    {lat: -22.880690, lng: -47.191280},
-    {lat: -22.880814, lng: -47.191057},
-    {lat: -22.880917, lng: -47.191130},
-    {lat: -22.880792, lng: -47.191346},
-    {lat: -22.880690, lng: -47.191280}
-  ];
-
-  // Construct the polygon.
-  var xan = new google.maps.Polygon({
-    paths: triangleCoords,
-    strokeColor: '#FF0000',
-    strokeOpacity: 0.8,
-    strokeWeight: 2,
-    fillColor: '#FF0000',
-    fillOpacity: 0.35,
-    _id: 03988
-  });
-  xan.setMap(map);
-
-  // POLYGONS
-  
-  var addListenersOnPolygon = function(polygon) {
-    google.maps.event.addListener(polygon, 'click', function (event) {
-      alert(polygon._id);
-    });  
-  }
-  
-  addListenersOnPolygon(xan);
-  
   // Drawing Stuff
   
   drawingManager = new google.maps.drawing.DrawingManager();
@@ -64,6 +32,7 @@ function initMap() {
     savingFieldArray = field;
     $("#fields").css("display", "inline-block");
     $("#tutorial").css("display", "none");
+    $("#delete").css("display", "none");
     drawingManager.setOptions({
       drawingControl: false
     });
@@ -79,12 +48,56 @@ $(function(){
     var user = getUser();
     var verified = canSave();    
     if(user && verified){
-      var desc = $("#desc").val();
-      var fieldName = $("#fieldName").val();
-      socket.emit("save", {user: user, coords: savingFieldArray, contract: "contract_name", description: desc, field: fieldName});
+      var data = {user: user, coords: savingFieldArray, contract: "contract_name"}
+      data.description = $("#desc").val();
+      data.field = $("#fieldName").val();
+      var _id = $("#_id").val();
+      if( _id !== "" && _id.length > 0){
+        data._id = _id;
+      }
+      socket.emit("save", data);
     }else{
       alert("You must singup before save changes");
     }
+  });
+  
+  $("#cancel").on("click", function(){
+    $("#_id").val("");
+    $("#desc").val("");
+    $("#fieldName").val("");
+    $("#fields").css("display", "none");
+    drawingManager.setOptions({
+      drawingControl: true
+    });
+    if(!savingFieldPolygon._id){
+      savingFieldPolygon.setMap(null);
+      savingFieldPolygon = undefined;
+    }
+  });
+  
+  $("#del").on("click", function(){
+    if(confirm("Are you sure that you want to delete this field?")){
+      socket.emit("delete", {_id: $("#_id").val()});
+    }
+  });
+  
+  socket.on("deleted", function(_id){
+    $("#_id").val("");
+    $("#desc").val("");
+    $("#fieldName").val("");
+    $("#fields").css("display", "none");
+    drawingManager.setOptions({
+      drawingControl: true
+    });
+    savingFieldPolygon.setMap(null);
+    savingFieldPolygon = undefined;
+    savingFieldArray = undefined;
+    function findId(json){
+      return json._id == _id;
+    }
+    var oldField = fieldsArray.find(findId);
+    var x = fieldsArray.indexOf(oldField);
+    fieldsArray.splice(x, 1);
   });
   
   socket.on("fieldsReady", function(fields){
@@ -101,7 +114,28 @@ $(function(){
           _id: field._id
         });
         newField.setMap(map);
+        var addListenersOnPolygon = function(polygon) {
+          google.maps.event.addListener(polygon, 'click', function (event) {
+            function findId(json){
+              return json._id == polygon._id;
+            }
+            var updatingField = fieldsArray.find(findId);
+            savingFieldPolygon = polygon;
+            $("#_id").val(updatingField._id);
+            $("#desc").val(updatingField.description);
+            $("#fieldName").val(updatingField.field);
+            savingFieldArray = updatingField.coords;
+            $("#tutorial").css("display", "none");
+            $("#fields").css("display", "inline-block");
+            drawingManager.setOptions({
+              drawingControl: false
+            });
+            drawingManager.setDrawingMode(null);
+          });  
+        }
+        addListenersOnPolygon(newField);
       });
+      
     }
   });
   
@@ -110,9 +144,9 @@ $(function(){
       drawingControl: true
     });
     
-    savingFieldPolygon.setMap(null);
-    
-    console.log(field);
+    if(savingFieldPolygon !== undefined){
+      savingFieldPolygon.setMap(null);
+    }
     
     var newField = new google.maps.Polygon({
       paths: field.coords,
@@ -125,9 +159,6 @@ $(function(){
     newField.setMap(map);
     
     $("#fields").css("display", "none");
-    // agregar o _id no desenho de alguma forma junto co nome
-    
-    console.log("Funfou");
   });
   
   socket.emit("loadFields", {user: getUser()});

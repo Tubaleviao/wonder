@@ -4,10 +4,13 @@
 
   <div id="fields">
     <p><h2>Register field</h2></p>
+    <input type="hidden" id="_id">
     <label>Field Name: </label><input type="text" id="fieldName" placeholder="(not required)"><br/>
     <label>Contract: </label><input type="file" id="fieldFile"><br/>
     <label>Description: </label><textarea id="desc" placeholder="A normal plain with 3 trees inside..."></textarea><br/>
-    <input type="submit" id="send">
+    <input type="submit" id="del" value="Delete">
+    <input type="submit" id="cancel" value="Cancel">
+    <input type="submit" id="send" value="Send">
   </div>
   <div id="map"></div>
 
