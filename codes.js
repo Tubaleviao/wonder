@@ -38,6 +38,24 @@ exports.bitcoin = function(socket){
 	
 };
 
+exports.broker = function(socket){
+	setInterval(function(){
+		socket.emit('attBTC', cur3);
+	}, 5000);
+	
+	socket.on('save', function(data){
+		mongo.saveField(data, function(field){
+			socket.emit('saved', field);
+		});
+	});
+	
+	socket.on('loadFields', function(data){
+		mongo.loadFields(data, function(fields){
+			socket.emit('fieldsReady', fields);
+		});
+	});
+};
+
 exports.profile = function(socket){
 	setInterval(function(){
 		socket.emit('attBTC', cur3);
@@ -186,18 +204,13 @@ exports.player = function(socket){
 
 	uploader.on('complete', function(event){
 		var data = {};
-		data.id = event.file.id;
+		data.id = event.file_id;
 		console.log(event);
-		data.music = event.file.name;
+		data.music = event.file_name;
 		fs.rename(uploader.dir+'/'+data.music, './public/'+user+'/'+data.music, function(err){
 			if(err) console.log(err);
 		});
-		socket.emit('deleteMusicProgress', data);
-		if(event.interrupt){
-			fs.unlink('./public/tmp/'+event.file.name, function(err, resp){
-				if(err) {console.log(err)}
-			});
-		}
+		socket.emit('deleteMusicProgress', event);
 	});
 
 	uploader.on("error", function(event){

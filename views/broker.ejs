@@ -1,0 +1,36 @@
+<% include header.ejs %>
+
+  <div id="tutorial"> Draw the field on the map to get start (you must to be logged in to save changes)</div>
+
+  <div id="fields">
+    <p><h2>Register field</h2></p>
+    <label>Field Name: </label><input type="text" id="fieldName" placeholder="(not required)"><br/>
+    <label>Contract: </label><input type="file" id="fieldFile"><br/>
+    <label>Description: </label><textarea id="desc" placeholder="A normal plain with 3 trees inside..."></textarea><br/>
+    <input type="submit" id="send">
+  </div>
+  <div id="map"></div>
+
+<script>
+  function getUser(){
+		var user;
+		<% if(locals.user){ %>
+			user = <%-JSON.stringify(user)%>;
+		<% }else{ %>
+			user = false;
+		<% } %>
+		return(user);
+	}
+  function canSave(){
+		var verified;
+		<% if(locals.verified){ %>
+			verified = <%-JSON.stringify(verified)%>;
+		<% }else{ %>
+			verified = false;
+		<% } %>
+		return(verified);
+	}
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB84aCfSgZcjzx6NUBEb7ClcY3DnaYtkA&callback=initMap&libraries=drawing"></script>
+<% include footer.ejs %>

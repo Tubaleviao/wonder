@@ -1,0 +1,46 @@
+#tutorial{
+  margin-top: 10px;
+}
+#map {
+  height: 80%;
+  width: 50%;
+  float: right;
+  margin-top: 25px;
+  display: inline-block;
+}
+#fields{
+  width: 40%;
+  text-align: left;
+  margin-top: 25px;
+  display: none;
+  word-wrap: break-word;
+}
+#fieldName{
+  width: 200px;
+}
+#fieldFile{
+  width: 118px;
+}
+#send{
+  float: right;
+  margin-right: 9px;
+}
+#fields input{
+  margin-left: 9px;
+  display: inline-block;
+  margin-top: 10px;
+}
+textarea{
+  width: 400px;
+  height: 300px;
+  background-color: black;
+  color: lime;
+  margin-left: 9px;
+  display: inline-block;
+  margin-top: 10px;
+}
+label{
+  float: left;
+  display: inline-block;
+  margin-top: 10px;
+}

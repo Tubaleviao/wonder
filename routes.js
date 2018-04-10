@@ -29,6 +29,16 @@ function replaceAll(str, needle, replacement) {
     }return str;
 }
 
+exports.broker = function(req, res){
+	var date = new Date();
+	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "broker"};
+	var cur2 = JSON.parse(JSON.stringify(cur));
+	var data = {title: 'Broker', user: req.session.user, verified: req.session.verified, 
+							brl: cur2.fulfillmentValue.BRL.last, usd: cur2.fulfillmentValue.USD.last};
+	res.render("broker", data);
+	mongo.saveVisit(visit);
+};
+
 exports.hortomorrow = function(req, res){
 	var date = new Date();
 	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "hortomorrow"};

@@ -105,9 +105,18 @@ $(document).ready(function(){
 		putOnQueue(data);
 	});
 	
-	socket.on('attMusicProgress', function(data){
+	/*socket.on('attMusicProgress', function(data){
 		var id = "#music"+data.id;
 		$(id).text(data.music+" ("+data.size+" Mb) - "+data.loaded+" Mb");
+	});*/
+	
+	socket.on('up_progress', function(data){
+		var id = "#music"+data.file_id;
+		$(id).text(data.file_name+" ("+data.file_size+" Mb) - "+data.loaded+" Mb");
+	});
+	
+	socket.on("up_completed", function(data){
+		socket.emit("complete", {data});
 	});
 	
 	socket.on('deleteMusicProgress', function(data){

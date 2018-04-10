@@ -292,5 +292,36 @@ module.exports = {
 			if(err){console.log(err); callback(false);
 			}else{callback(true);}
 		});
+	},
+	saveField: function(field, callback){
+		var fields = db.collection('fields');
+		if(field._id){
+			field._id = ObjectID.createFromHexString(field._id);
+		}
+		if(field.field === "" || field.field == null){
+			fields.aggregate([{$match: {user: field.user}}, {$group: {_id: "1", count: {$sum: 1}}}], function(err, results){
+				if(err || results[0] === undefined){
+					field.field = "UnamedField";
+				}else{
+					field.field = "UnamedField"+results[0].count;
+				}
+				fields.insertOne(field, {w:1}, function(err, res){
+					if(err){ console.log(err);
+					}else{callback(res.ops[0]);}
+				});
+			});
+		}else{
+			fields.insertOne(field, {w:1}, function(err, res){
+				if(err){ console.log(err);
+				}else{callback(res.ops[0]);}
+			});
+		}
+	},
+	loadFields: function(data, callback){
+		var fields = db.collection('fields');
+		fields.find( {user: data.user} ).toArray(function(err, docs){
+			if(err){console.log(err); callback(false);
+			}else{callback(docs);}
+		});
 	}
 };
