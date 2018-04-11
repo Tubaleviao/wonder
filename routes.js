@@ -430,7 +430,7 @@ exports.login = function(req, res){
 					req.session.user = req.body.username;
 					req.session.email = exist.email;
 					req.session.verified = true;
-					res.redirect('/');
+					res.redirect(req.body.url);
 				}else{
 					res.render('home', {title: 'Home', msg: 'Wrong password'});
 				}

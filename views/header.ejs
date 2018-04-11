@@ -27,6 +27,8 @@
 				<% }else{ %>
 					<a href="#" id="btn-login" >Login</a>
 					<form id="login" method="post" action="login">
+						<input type="hidden" name="url" id="url" value="" />
+						<script>document.getElementById('url').value = window.location.pathname;</script>  
 						<input type="text" name="username" id="u" placeholder="Username" maxlength="15" required/>
 						<input type="password" name="password" placeholder="Password" required/>
 						<input type="submit" value="Enter" class="bt"/>

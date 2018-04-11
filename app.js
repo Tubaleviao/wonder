@@ -15,8 +15,6 @@ server = /*https*/http.createServer(/*options,*/ app),
 io = require('socket.io')(server),
 session_secret = process.env.SESSION_SECRET || 'nosecrethereisusedsoyeah';
 
-console.log(session_secret);
-
 app.use(siofu.router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
@@ -31,7 +29,7 @@ app.get('/fisheye', routes.fisheye);
 app.get('/home', routes.home);
 app.get('/php', routes.php);
 app.get('/broker', routes.broker);
-app.get('/bisolutions', routes.bi);
+//app.get('/bisolutions', routes.bi);
 app.post('/login', routes.login);
 app.get('/logout', routes.logout);
 app.post('/signup', routes.signup);

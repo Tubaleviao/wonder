@@ -15,7 +15,7 @@ function statusChangeCallback(response) {
       if (response.authResponse) {
         testAPI() // USER AUTHORIZED APP
       }
-    }, {scope: 'public_profile,email,user_birthday', return_scopes: true});
+    }, {scope: 'public_profile,email,user_friends', return_scopes: true}); // user_birthday
   }
 }
 function testAPI() {
@@ -104,6 +104,24 @@ function gSignOut() {
 		$(".gcolored").css('display', 'none');
 		$(".ginfo").css('display', 'none');
 	});
+}
+
+// SPOTIFY SIGN IN
+
+var client_id = ''; // Your client id
+var client_secret = ''; // Your secret
+var redirect_uri = 'http://tuba.work'; // Your redirect uri
+var scopes = 'user-read-private user-read-email';
+
+var spot_url = 'https://accounts.spotify.com/authorize'+
+		'response_type=token'+
+		'&client_id=' + encodeURIComponent(client_id)+
+		'&scope=' + encodeURIComponent(scope)+
+		'&redirect_uri=' + encodeURIComponent(redirect_uri)+
+		'&state=' + encodeURIComponent(state);
+
+function sSignIn(url){
+	window.open(url);
 }
 
 // PROFILE PAGE CODE
