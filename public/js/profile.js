@@ -108,20 +108,65 @@ function gSignOut() {
 
 // SPOTIFY SIGN IN
 
-var client_id = ''; // Your client id
-var client_secret = ''; // Your secret
-var redirect_uri = 'http://tuba.work'; // Your redirect uri
-var scopes = 'user-read-private user-read-email';
+var client_id = 'b04664c02dfc44b8976ea038afd078c4'; // Your client id
+var client_secret = 'be4f307f55ba40eb9c8836ebd86dff93'; // Your secret
+var redirect_uri = 'http://tuba.work/profileCallback/'; // Your redirect uri
+var scope = 'user-read-private user-read-email';
+var spot_pop;
 
-var spot_url = 'https://accounts.spotify.com/authorize'+
+var spot_url = 'https://accounts.spotify.com/authorize?'+
 		'response_type=token'+
 		'&client_id=' + encodeURIComponent(client_id)+
 		'&scope=' + encodeURIComponent(scope)+
 		'&redirect_uri=' + encodeURIComponent(redirect_uri)+
-		'&state=' + encodeURIComponent(state);
+		'&state=' + encodeURIComponent("lskcuem387509jdu");
 
-function sSignIn(url){
-	window.open(url);
+function sSignIn(){
+	spot_pop = window.open(spot_url, 'pagina', "width=478, height=517, top=100, left=110, scrollbars=no");
+}
+
+function autoSpotSignIn(){
+	console.log("teste");
+}
+
+function codeReceiver(hashParameters){
+	var stateKey = 'spotify_auth_state';
+	var access_token = hashParameters.access_token,
+			state = hashParameters.state;
+	
+	if (access_token && state == null) {
+		alert('There was an error during the authentication');
+	} else {
+		if (access_token) {
+			$.ajax({
+					url: 'https://api.spotify.com/v1/me',
+					headers: {
+						'Authorization': 'Bearer ' + access_token
+					},
+					success: function(response) {
+						console.log(response);
+						var table = $('<table></table>').addClass('sinfo');
+						var row1 = $('<tr></tr>').append("<td colspan=2 class='title'>Spotify Information</td>");
+						var row2 = $('<tr></tr>').append('<td>ID</td><td>'+response.id+'</td>');
+						var row3 = $('<tr></tr>').append('<td>Name</td><td>'+response.display_name+'</td>');
+						var row3_1 = $('<tr></tr>').append('<td>Country</td><td>'+response.country+'</td>');
+						var row5 = $('<tr></tr>').append('<td>Email</td><td>'+response.email+'</td>');
+						var row4;
+						if(response.images[0]){
+							row4 = $('<tr></tr>').append('<td>Image</td><td><img src="'+response.images[0].url+'"></img></td>');
+						}else{row4 = $('<tr></tr>').append('<td>Image</td><td>No Image</td>');}
+						
+						table.append(row1,row4, row2, row3, row3_1, row5);
+						$(".info").prepend(table);
+						$('#sgray').hide();
+						$('#scolored').show();
+					}
+			});
+		} else {
+				$('#sgray').show();
+				$('#scolored').hide();
+		}
+	}
 }
 
 // PROFILE PAGE CODE
@@ -129,6 +174,8 @@ function sSignIn(url){
 $(function(){
   
   var socket = io.connect('http://tuba.work/profile');
+	
+	autoSpotSignIn();
     
   socket.on('userInfo', function(info){
     console.log(info);

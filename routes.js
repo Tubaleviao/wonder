@@ -512,6 +512,18 @@ exports.chat = function(req, res){
 	mongo.saveVisit(visit);
 };
 
+exports.profileCallback = function(req, res){
+	var now = moment();
+	var date = new Date();
+	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "profileCallback"};
+	var data = {title: 'Callback'};
+	if(req.session.user != null){
+		data.user = req.session.user;
+	}
+	res.render('profileCallback', data);
+	mongo.saveVisit(visit);
+};
+
 
 exports.chatApi = function(req, res){
 	var now = moment();

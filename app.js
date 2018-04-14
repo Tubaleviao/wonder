@@ -42,6 +42,7 @@ app.get('/bitcoin', verified, routes.bitcoin);
 app.get('/player', verified, routes.player);
 app.get('/profile/:user', verified, express.static(__dirname + '/profile'), routes.otherProfile);
 app.get('/profile', verified, routes.profile);
+app.get('/profileCallback', verified, routes.profileCallback);
 app.get('/help', verified, routes.help);
 app.get('/notes', verified, routes.notes);
 app.get('/chat', routes.chat);
