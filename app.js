@@ -74,6 +74,7 @@ io.of('/shooter').on('connection', code.shooter);
 io.of('/stracker').on('connection', code.stracker);
 io.of('/player').on('connection', code.player);
 io.of('/broker').on('connection', code.broker);
+io.of('/tubaChat').on('connection', code.tubaChat);
 
 server.listen(port, function(){console.log("Server running at the port %d", port);});
 
