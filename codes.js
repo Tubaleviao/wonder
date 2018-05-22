@@ -1,3 +1,4 @@
+const puppeteer = require('puppeteer');
 var mongo = require('./mongo');
 var moment = require('moment');
 var usernames = [];
@@ -38,6 +39,24 @@ exports.bitcoin = function(socket){
 	
 };
 
+exports.tubaChat = function(socket){
+	setInterval(function(){
+		socket.emit('attBTC', cur3);
+	}, 5000);
+	
+	socket.on("load", function(data){
+		(async () => {
+			const browser = await puppeteer.launch();
+			const page = await browser.newPage();
+			await page.goto('https://example.com');
+			await page.screenshot({path: 'example.png'});
+
+			await browser.close();
+		})();
+	});
+	
+};
+
 exports.broker = function(socket){
 	setInterval(function(){
 		socket.emit('attBTC', cur3);
@@ -68,6 +87,12 @@ exports.profile = function(socket){
 	}, 5000);
 	socket.on('userInfo', function(user){
 		socket.emit('userInfo', mongo.getUserInfo(user));
+	});
+	socket.on('request', function(data){
+		var r = request({followRedirect: true, url: data.url}, function(err, resp, body){
+			if(err){console.log(err)}else{
+			socket.emit('result', resp);}
+		});
 	});
 };
 

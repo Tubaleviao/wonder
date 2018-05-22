@@ -61,8 +61,8 @@ exports.fisheye = function(req, res){
 	var date = new Date();
 	var visit = {ip: req.ip, date: date.getTime(), user: "NO_USER", page: "fisheye"};
 	var cur2 = JSON.parse(JSON.stringify(cur));
-	var data = {title: 'Help', user: req.session.user, brl: cur2.fulfillmentValue.BRL.last, usd: cur2.fulfillmentValue.USD.last};
-	res.render("help", data);
+	var data = {title: 'tubaChat', user: req.session.user, brl: cur2.fulfillmentValue.BRL.last, usd: cur2.fulfillmentValue.USD.last};
+	res.render("tubaChat", data);
 	mongo.saveVisit(visit);
 };
 
@@ -430,7 +430,11 @@ exports.login = function(req, res){
 					req.session.user = req.body.username;
 					req.session.email = exist.email;
 					req.session.verified = true;
-					res.redirect(req.body.url);
+          if(req.body.url == "login"){
+            res.redirect("home");
+          }else{
+            res.redirect(req.body.url);
+          }
 				}else{
 					res.render('home', {title: 'Home', msg: 'Wrong password'});
 				}

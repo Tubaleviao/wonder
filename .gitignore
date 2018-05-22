@@ -1,5 +1,7 @@
 # files to be excluded:
 
+package-lock.json
+*.deb
 cert/*
 !.none  
 php/*

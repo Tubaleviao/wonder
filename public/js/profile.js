@@ -125,10 +125,6 @@ function sSignIn(){
 	spot_pop = window.open(spot_url, 'pagina', "width=478, height=517, top=100, left=110, scrollbars=no");
 }
 
-function autoSpotSignIn(){
-	console.log("teste");
-}
-
 function codeReceiver(hashParameters){
 	var stateKey = 'spotify_auth_state';
 	var access_token = hashParameters.access_token,
@@ -175,7 +171,11 @@ $(function(){
   
   var socket = io.connect('http://tuba.work/profile');
 	
-	autoSpotSignIn();
+	socket.emit("request", {url: spot_url});
+	
+	socket.on("result", function(body){
+		console.log(body);
+	});
     
   socket.on('userInfo', function(info){
     console.log(info);
