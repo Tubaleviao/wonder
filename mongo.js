@@ -1,8 +1,10 @@
 var mc = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var url = 'mongodb://localhost:27017/wonder';
 var bcrypt = require('bcrypt');
 var db;
+var mdb_user = process.env.MONGO_USER;
+var mdb_pass = process.env.MONGO_PASS;
+var url = 'mongodb://'+mdb_user+':'+mdb_pass+'@localhost:27017/wonder';
 
 mc.connect(url, function(err, database){
 	if(err) throw err;

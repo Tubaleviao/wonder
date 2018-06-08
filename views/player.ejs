@@ -17,15 +17,14 @@
 			<div id="selected"></div>
 			<input type="text" class="search" placeholder="Search..."></input>
 			<div class="label">
-				<input type="file" id="siofu_input" accept="audio/mp3" onchange="selected()" multiple/>
+				<input type="file" id="upio_input" accept="audio/mp3" onchange="selected()" multiple/>
 				Upload Files
 			</div><br/>
-			
 			<ul class="musics"></ul>
 		</div>
 
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="/siofu/client.js"></script>
+	<script src="/upio/client.js"></script>
 	<script src="js/drags.js"></script>
 	<script>
 		var musicsJs = <%-JSON.stringify(musics)%>;

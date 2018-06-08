@@ -74,7 +74,7 @@ function remove(id) {
 $(document).ready(function(){
 	
 	var socket = io('http://tuba.life/player');
-	var uploader = new SocketIOFileUpload(socket);
+	var uploader = new UpIoFileUpload(socket);
 	var next = musics[Math.floor(Math.random()*musics.length)];
 	var user = "users/"+getUser();
 	var audioTag = $('#audio');
@@ -82,7 +82,7 @@ $(document).ready(function(){
 	
 	dom.volume = 0.5;
 	
-	uploader.listenOnInput(document.getElementById("siofu_input"));
+	uploader.listenInput(document.getElementById("upio_input"));
 	uploader.chunkSize = 1024 * 100;
 	
 	// SOCKET FUNCTIONS

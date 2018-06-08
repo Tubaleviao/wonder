@@ -1,5 +1,6 @@
 # files to be excluded:
 
+ecosystem.config.js
 package-lock.json
 *.deb
 cert/*
