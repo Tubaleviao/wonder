@@ -1,6 +1,6 @@
 $(function(){
   
-  var socket = io.connect('http://tuba.life/bitcoin');
+  var socket = io('/bitcoin');
 	
 	$("#wid").keyup(function(event) {
 		if (event.keyCode === 13) {
@@ -20,7 +20,7 @@ $(function(){
   
   socket.on('chart', function(data){
     
-    console.log(JSON.stringify(data.chart));
+    //console.log(JSON.stringify(data.chart));
     var chart = c3.generate({
 			bindto: '#chart',
 			data: {

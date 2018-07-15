@@ -38,6 +38,7 @@ function load_six_months(data){
 	var current = new Date();
 	var form = $('<form/>').attr('action', 'one').attr('id', 'one_form');
 	$('#lookup').empty();
+  var accumulated = 0;
 	for(var i = -1; i<5; i++){
 		var out, inp, total;
 		var monthBox, ins=0, outs=0;
@@ -89,9 +90,10 @@ function load_six_months(data){
 
 		inp = $('<p/>').addClass('inputs').append('Inputs: '+ins);
 		out = $('<p/>').addClass('outputs').append('Outputs: '+outs);		
-		total = $('<p/>').addClass('total').append('Resting: '+Number(ins+outs));
+		total = $('<p/>').addClass('total').append('Resting: '+Number(ins+outs+accumulated));
 		monthBox.append(inp, out, total);
 		$('#lookup').append(monthBox);
+    accumulated += Number(ins+outs);
 		//$('#data').append(inp, out, total);
 	}
 }
@@ -154,7 +156,7 @@ function load_one_month(all, id){
 
 $(function(){
 
-	var socket = io('http://tuba.life/money');
+	var socket = io('/money');
 	var today = new Date();
 	var all;
 	
@@ -378,11 +380,20 @@ $(function(){
 		var year = d.getFullYear();
 		$('select[name="month"]').val(month);
 		$('input[name="year"]').val(Number(year));
+    $('input[name="starty"]').val(Number(year));
+		$('select[name="startm"]').val(month);
 	});
 	
 	socket.on('moveDeleted', function(data){
 		$("#"+data.id).remove();
 		$("form:first").trigger('reset');
+    var d = new Date();
+		var month = d.getMonth()+1;
+		var year = d.getFullYear();
+		$('select[name="month"]').val(month);
+		$('input[name="year"]').val(Number(year));
+    $('input[name="starty"]').val(Number(year));
+		$('select[name="startm"]').val(month);
 	});
 
 	socket.on('getMovements', function(data){

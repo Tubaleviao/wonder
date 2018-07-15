@@ -323,7 +323,6 @@ module.exports = {
 				});
 			}
 		}
-		
 	},
 	loadFields: function(data, callback){
 		var fields = db.collection('fields');
@@ -338,6 +337,16 @@ module.exports = {
 		fields.deleteOne( {_id: idHex}, function(err, doc){
 			if(err){console.log(err); callback(false);
 			}else{callback(data._id);}
+		});
+	},
+  saveRecord: function(collecction, record, callback){
+		if(record._id){
+			record._id = ObjectID.createFromHexString(record._id);
+		}
+		var collect = db.collection(collecction);
+		collect.save(record, {w:1}, function(err, rec_inserted){
+			if(err){ console.log(err); callback(false);
+			}else{callback(rec_inserted);}
 		});
 	}
 };

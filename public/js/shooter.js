@@ -1,7 +1,7 @@
 $(function(){
 
 	var $window = $(window);
-	var socket = io('http://tuba.life/shooter');
+	var socket = io('/shooter');
 	var up, down, left, right;
 	var pressed = [], players = [];
 	var me = 'p1';

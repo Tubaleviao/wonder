@@ -1,6 +1,6 @@
 $(function(){
   
-  var socket = io.connect('http://tuba.life/dashboard');
+  var socket = io('/dashboard');
   
   $( "#p1" ).first().show( 200, function showNext() {
     $( this ).next( ".p" ).show( 200, function(){

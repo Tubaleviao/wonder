@@ -1,21 +1,18 @@
 var express = require('express'),
-http = require('http'), // https = require('https'), // npm pem??
+http = require('http'), // https = require('https'), // npm pem?? fff
 session = require('express-session'),
 app = express(),
 port = process.env.PORT || 80,
 routes = require('./routes'),
 bodyParser = require('body-parser'),
-siofu = require("socketio-file-upload"),
+upio = require("up.io"),
 code = require('./codes'),
-  /*multer  = require('multer'),
-  storage = multer.diskStorage(code.storage),
-  upload = multer({ storage: storage }),*/
 options = code.options,
 server = /*https*/http.createServer(/*options,*/ app),
 io = require('socket.io')(server),
 session_secret = process.env.SESSION_SECRET || 'nosecrethereisusedsoyeah';
 
-app.use(siofu.router);
+app.use(upio.router);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.use('/modules', express.static(__dirname + '/node_modules/'));
@@ -26,6 +23,7 @@ app.set('view engine', 'ejs');
 //app.get('/gauge', routes.gauge);
 app.get('/contagemregressivaparaahortomorrow', routes.hortomorrow);
 app.get('/fisheye', routes.fisheye);
+app.get('/estouvivo', routes.estouvivo);
 app.get('/home', routes.home);
 app.get('/php', routes.php);
 app.get('/broker', routes.broker);
@@ -57,9 +55,11 @@ app.get('/money', verified, routes.money);
 app.get('/save', verified, routes.save);
 //app.get('/del', verified, routes.del);
 app.get('/six', verified, routes.six);
+app.get('/treasure', verified, routes.treasure);
 app.get('*', function(req, res){res.send('Nothing here.');});
 
 io.of('/bitcoin').on('connection', code.bitcoin);
+io.of('/treasure').on('connection', code.treasure);
 io.of('/console').on('connection', code.console);
 io.of('/help').on('connection', code.help);
 io.of('/about').on('connection', code.about);

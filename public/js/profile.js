@@ -169,7 +169,7 @@ function codeReceiver(hashParameters){
 
 $(function(){
   
-  var socket = io.connect('http://tuba.work/profile');
+  var socket = io('/profile');
 	
 	socket.emit("request", {url: spot_url});
 	

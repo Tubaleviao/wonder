@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	
-	var socket = io.connect('http://tuba.life/home');
+	var socket = io('/home');
 	
 	socket.on('attBTC', function(data){
 		if($("#brl").text() != data.brl){

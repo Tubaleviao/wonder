@@ -1,6 +1,6 @@
 $(function(){
   
-  var socket = io.connect('http://tuba.work/notes');
+  var socket = io('/notes');
   var x, y;
   /*$('#save').on('click', function(){
     socket.emit('save', {user: getUser(), note: $('#note1').val() });

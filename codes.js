@@ -1,4 +1,3 @@
-const puppeteer = require('puppeteer');
 var mongo = require('./mongo');
 var moment = require('moment');
 var usernames = [];
@@ -7,7 +6,7 @@ var fs = require('fs');
 var schedule = require('node-schedule');
 var schedules = []; // new schedule.RecurrenceRule();
 var request = require('request');
-var siofu = require("socketio-file-upload"),
+var upio = require("up.io"),
 exchange = require('blockchain.info/exchange'),
 statistics = require('blockchain.info/statistics'),
 wallet = require('blockchain.info/MyWallet'),
@@ -42,19 +41,7 @@ exports.bitcoin = function(socket){
 exports.tubaChat = function(socket){
 	setInterval(function(){
 		socket.emit('attBTC', cur3);
-	}, 5000);
-	
-	socket.on("load", function(data){
-		(async () => {
-			const browser = await puppeteer.launch();
-			const page = await browser.newPage();
-			await page.goto('https://example.com');
-			await page.screenshot({path: 'example.png'});
-
-			await browser.close();
-		})();
-	});
-	
+	}, 5000);	
 };
 
 exports.broker = function(socket){
@@ -94,6 +81,16 @@ exports.profile = function(socket){
 			socket.emit('result', resp);}
 		});
 	});
+};
+
+exports.treasure = function(socket){
+	setInterval(function(){
+		socket.emit('attBTC', cur3);
+	}, 5000);
+  
+  //mongo.saveRecord('treasure', record, function(rec){
+  
+  //});
 };
 
 exports.console = function(socket){
@@ -188,9 +185,9 @@ exports.bi = function(socket){
 }
 
 exports.player = function(socket){
-	var uploader = new siofu();
+	var uploader = new upio();
 	var user; // users/user
-	uploader.dir = "./public/tmp";
+	uploader.dir = "/public/tmp";
 	uploader.listen(socket);
 	
 	setInterval(function(){
@@ -207,44 +204,46 @@ exports.player = function(socket){
 		});
 	});
 
-	uploader.on('start', function(event){
+	socket.on('up_started', function(event){
 		var data = {};
-		if(fs.existsSync(__dirname+'/public/'+user+'/'+event.file.name)){
-			data.exists = true;
-			data.music = event.file.name;
-			uploader.abort(event.file.id, socket);
-			socket.emit('addMusicProgress', data);
+		if(fs.existsSync(__dirname+'/public/'+user+'/'+event.music)){
+			//data.exists = true;
+			//data.music = event.music;
+			socket.emit('up_abortOne', event.id); // , socket
 		}else{
 			data.exists = false;
-			data.id = event.file.id;
-			data.music = event.file.name;
-			data.size = (event.file.size/1024/1024).toFixed(2);
+			data.id = event.id;
+			data.music = event.music;
+			data.size = (event.size/1024/1024).toFixed(2);
 			data.loaded = 0;
 			socket.emit('addMusicProgress', data);
 		}
 	});
 
-	uploader.on('progress', function(event){
+	//uploader.on('progress', function(event){
+  socket.on('up_progress', function(event){
 		var data = {};
-		data.id = event.file.id;
-		data.music = event.file.name;
-		data.size = (event.file.size/1024/1024).toFixed(2);
-		data.loaded = (event.file.bytesLoaded/1024/1024).toFixed(2);
+		data.id = event.id;
+		data.music = event.music;
+		data.size = (event.size/1024/1024).toFixed(2);
+		data.loaded = (event.loaded/1024/1024).toFixed(2);
 		socket.emit("attMusicProgress", data);
 	});
 
-	uploader.on('complete', function(event){
-		var data = {};
-		data.id = event.file_id;
-		console.log(event);
-		data.music = event.file_name;
-		fs.rename(uploader.dir+'/'+data.music, './public/'+user+'/'+data.music, function(err){
-			if(err) console.log(err);
-		});
+	//uploader.on('complete', function(event){
+  socket.on('up_completed', function(event){
+    event.id = event.file_id;
+		event.music = event.file_name;
+    if(event.success){
+      fs.rename( __dirname+'/public/tmp/'+event.music, __dirname+'/public/'+user+'/'+event.music, function(err){
+        if(err) console.log(err);
+      });
+    }
 		socket.emit('deleteMusicProgress', event);
 	});
 
-	uploader.on("error", function(event){
+	//uploader.on("error", function(event){ // test
+  socket.on("error", function(event){
 		console.log(event.file.name+" - "+event.memo);
 		fs.unlink('./public/tmp/'+event.file.name, function(err, resp){
 			if(err) {console.log(err)}

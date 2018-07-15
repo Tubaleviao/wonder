@@ -74,7 +74,7 @@ function toTime(timo){
 
 $(function(){
 	
-	var startdate, enddate, dia, hora, min, socket = io('http://tuba.life/stracker');
+	var startdate, enddate, dia, hora, min, socket = io('/stracker');
 	var mongodata = getRecords();
 	
 	function paintGrid(){

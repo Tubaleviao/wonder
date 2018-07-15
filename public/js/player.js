@@ -1,7 +1,7 @@
 var musics;
 
 function selected(){
-	var x = document.getElementById("siofu_input");
+	var x = document.getElementById("upio_input");
 	var txt3 = $("<div/>");
 	var txt = "", total=0;
 	if ('files' in x) {
@@ -24,7 +24,7 @@ function selected(){
 	if(Number(total)+Number(getSize()) >= 2048){
 		alert("You have only "+Number(2048-getSize()).toFixed(2)+" Mb of free space, you are trying to upload "+total+" Mb\n"+
 				 		"To get more space, you must to pay U$ 0,10 per Gb per Month.");
-		$("#siofu_input").val("");
+		$("#upio_input").val("");
 	}else{
 		$('#selected').empty();
 		$('#selected').append(txt3.html());
@@ -55,7 +55,7 @@ function addMusic(music){
 }
 
 function putOnQueue(data){
-	var music = $("<div/>").attr("id", "music"+data.id)
+	var music = $("<div/>").attr("id", "music"+data.id);
 	if(!data.exists){
 		music.text(data.music+" ("+data.size+" Mb) - "+data.loaded+" Mb");
 		$("#upload-progress").append(music);
@@ -73,7 +73,7 @@ function remove(id) {
 
 $(document).ready(function(){
 	
-	var socket = io('http://tuba.life/player');
+	var socket = io('/player');
 	var uploader = new UpIoFileUpload(socket);
 	var next = musics[Math.floor(Math.random()*musics.length)];
 	var user = "users/"+getUser();
@@ -82,8 +82,8 @@ $(document).ready(function(){
 	
 	dom.volume = 0.5;
 	
+  uploader.chunkSize = 1024 * 100;
 	uploader.listenInput(document.getElementById("upio_input"));
-	uploader.chunkSize = 1024 * 100;
 	
 	// SOCKET FUNCTIONS
 	
@@ -100,29 +100,24 @@ $(document).ready(function(){
 		putOnQueue(data);
 	});
 	
-	socket.on('start', function(data){
-		console.log('start');
-		putOnQueue(data);
-	});
-	
-	/*socket.on('attMusicProgress', function(data){
-		var id = "#music"+data.id;
-		$(id).text(data.music+" ("+data.size+" Mb) - "+data.loaded+" Mb");
-	});*/
-	
 	socket.on('up_progress', function(data){
 		var id = "#music"+data.file_id;
-		$(id).text(data.file_name+" ("+data.file_size+" Mb) - "+data.loaded+" Mb");
+		$(id).text(data.file_name+" ("+(data.file_size/1024/1024).toFixed(2)+" Mb) - "+
+               (data.loaded/1024/1024).toFixed(2)+" Mb"); 
 	});
-	
-	socket.on("up_completed", function(data){
-		socket.emit("complete", {data});
-	});
-	
+  
 	socket.on('deleteMusicProgress', function(data){
-		musics.push(data.music);
-		remove("music"+data.id);
-		addMusic(data.music);
+    if(data.success){
+      musics.push(data.music); // Adds the new music to the music list
+      addMusic(data.music);
+      $("#music"+data.id).append(data.music+" - Completed!").show(200).delay(1000).fadeOut(150).remove();
+    }else{
+      var music = $("<div/>").attr("id", "music"+data.id);
+      music.text($("#selected").children().first().text()+" - Aborted!").show(200).delay(1000).fadeOut(150);
+      $("#upload-progress").append(music);
+      $("#selected").children().first().remove();
+    }
+    
 	});
 	
 	// PAGE USABILITY
@@ -134,7 +129,7 @@ $(document).ready(function(){
 	});
 	
 	$('.label').on('click', function(){
-		document.getElementById("siofu_input").click();
+		document.getElementById("upio_input").click();
 	});
 
 	$('.checkbox').click(function(){

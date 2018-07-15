@@ -39,6 +39,26 @@ exports.broker = function(req, res){
 	mongo.saveVisit(visit);
 };
 
+exports.treasure = function(req, res){
+	var date = new Date();
+	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "treasure"};
+	var cur2 = JSON.parse(JSON.stringify(cur));
+	var data = {title: 'Treasure', user: req.session.user, verified: req.session.verified, 
+							brl: cur2.fulfillmentValue.BRL.last, usd: cur2.fulfillmentValue.USD.last};
+	res.render("treasure", data);
+	mongo.saveVisit(visit);
+};
+
+exports.estouvivo = function(req, res){
+	var date = new Date();
+	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "estouvivo"};
+	var cur2 = JSON.parse(JSON.stringify(cur));
+	var data = {title: 'Estou_Vivo', user: req.session.user, verified: req.session.verified, 
+							brl: cur2.fulfillmentValue.BRL.last, usd: cur2.fulfillmentValue.USD.last};
+	res.render("estouvivo", data);
+	mongo.saveVisit(visit);
+};
+
 exports.hortomorrow = function(req, res){
 	var date = new Date();
 	var visit = {ip: req.ip, date: date.getTime(), user: req.session.user, page: "hortomorrow"};
