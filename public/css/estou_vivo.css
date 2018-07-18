@@ -1,0 +1,10 @@
+ul{
+  list-style: circle;
+  list-style-position: inside;
+}
+.start{
+  margin-top: 2%;
+  width: 25%;
+  height: 10%;
+  cursor: pointer;
+}
